@@ -16,16 +16,27 @@ Lilynet aims to solve this problem by adhering to 3 principles:
 
 ## 1.1 Definitions
 To keep consistency in this proposal, the following definitions will be referred to:
-- `visitor` - an entity that wishes to access some endpoint
+- `visitor node` - the computer of an entity that wishes to access some endpoint
 - `bandwidth` - the data transfer capacity of a computer network in bits per second (Bps)
 - `throughput` - the actual amount of data that is successfully sent/received over the communication link, measured in bits per second (Bps)
 - `relay node` - a computer in the network that is relaying information between 2 parties
+- `peer` - a `relay node` that either a `visitor` or `relay node` is connected to
 
 
-# 2. Bridge Request
+# 2. Decentralized Network Discovery
+
+Each `node` in the network is connected (by default) to 10 `peers`. To boostrap the list, similar to the <cite>[Bitcoin P2P bootstrapping mechanism][4]</cite>, Bridgenet will first try to connect to peers that it has connected to before, saved in its local database. If no cached peers can be connected to, it will query a DNS seed to get a list of active peers. If none of those are reachable, it will fallback to a hardcoded peer address. Once a peer is reached, it will be queried to find additional peers.
+
+Each node will send a heartbeat packet (of 10MB) to measure `throughput` periodically. Any peers that have a throughput slower than 1 standard deviation away from the average throughput will be dropped and new peers will be sought.
+
+
+# 3. Bridge Request
+
+When a `visitor node` wants to access the Bridgenet Network, it will first send a `bridge request` to each of its `peers`. 
 
 
 
 [1]: https://apps.dtic.mil/sti/pdfs/ADA465464.pdf
 [2]: https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.927.1044&rep=rep1&type=pdf
 [3]: https://community.torproject.org/relay/types-of-relays/
+[4]: https://bitcoin.stackexchange.com/a/32952/1151
