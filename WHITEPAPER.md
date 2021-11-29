@@ -15,9 +15,11 @@ Lilynet aims to solve this problem by adhering to 3 principles:
 
 
 ## 1.1 Definitions
-
 To keep consistency in this proposal, the following definitions will be referred to:
-- 
+- `visitor` - an entity that wishes to access some endpoint
+- `bandwidth` - the data transfer capacity of a computer network in bits per second (Bps)
+- `throughput` - the actual amount of data that is successfully sent/received over the communication link, measured in bits per second (Bps)
+- `relay node` - a computer in the network that is relaying information between 2 parties
 
 
 # 2. Bridge Request
