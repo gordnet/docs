@@ -21,6 +21,7 @@ To keep consistency in this proposal, the following definitions will be referred
 - `throughput` - the actual amount of data that is successfully sent/received over the communication link, measured in bits per second (Bps)
 - `relay node` - a computer in the network that is relaying information between 2 parties
 - `peer` - a `relay node` that either a `visitor` or `relay node` is connected to
+- `coin` - a unit of monetary value. Details TBD
 
 
 # 2. Decentralized Network Discovery
@@ -32,7 +33,11 @@ Each node will send a heartbeat packet (of 10MB) to measure `throughput` periodi
 
 # 3. Bridge Request
 
-When a `visitor node` wants to access the Bridgenet Network, it will first send a `bridge request` to each of its `peers`. 
+When a `visitor node` wants to access the Bridgenet Network, it will first send a `bridge request` to each of its `peers`, these are the first layer connections. Each of them then sends a `bridge request` to each of their `peers` to build the second layer connections. Each of these sends a `bridge request` to each of their `peers` to get to the third and final layer connections. At this point, there's (potentially) 1,000 different paths, assuming that no 2 `nodes` are connected to the same `peers`. However, in practice, it's likely that there's significant overlap of `nodes`, which means the total number of unique paths will be less than the 1,000 theoretical maximum.
+
+Each `bridge request` is a packet of 10MB, so that the `relay node` can measure the uplink `throughput`. A `bridge request response` is a 10MB packet that includes 
+
+When a node receives a `bridge request`, it replies with 
 
 
 
