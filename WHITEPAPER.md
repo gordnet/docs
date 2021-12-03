@@ -39,6 +39,9 @@ When a `visitor node` wants to access the Bridgenet Network, it will first send 
 
 Each `bridge request` is a packet of 10MB, so that the `relay node` can measure the uplink `throughput`. When a node receives a `bridge request`, it replies with it's `throughput` and a price in `coin` per 100MB of data. The packet size of the response is 10MB so that the requesting `node` can ascertain if the reported `throughput` is valid (within some tolerance). The price mechanism will be covered in the [Price Discovery](#5.-Price-Discovery) section. Each `node` that sends a `bridge request` and receives a response calculates, based on some heuristic, which offer is the best (`throughput` / `coin`) and passes that backwards to any `node` that sent it a `bridge request`. Along with the pricing and `throughput` information, each node passes back it's public key.
 
+![Cryptornet - Ref doc  - Bridge Request](https://user-images.githubusercontent.com/1019677/144675966-e98faf5f-b19a-4140-8be7-9d29d93d7dfe.png)
+
+
 # 4. Proof-of-Relay
 
 When the `originator` sends a packet to the first `node` in the `bridge`, it is first wrapped and encrypted 3 times. Along with sending the packet, the `originator` also broadcasts an `unlockKey` to the network via all of its peers. The `originator` sends a packet that has been encrypted with the public key of that node. When that packet is decrypted by the first `node`, it looks like:
