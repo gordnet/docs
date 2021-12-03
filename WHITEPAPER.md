@@ -71,8 +71,15 @@ The same actions apply and now the second `node` is revealing its `unlockKey` to
 It forwards the `[ORIGINAL DATA REQUEST]` to the `destination` and reveals its `unlockKey` to all of its peers. Now there are 4 `unlockKeys` that the network is aware of. Each node races to combine these 4 signatures to unlock the reward (discussed in Section TBD).
 
 
-
 # 5. Price Discovery
+
+While not at the protocol level, each `node` will determine its own price per MB (in terms of `coin`). A `node` is incentivized to maximize its utilized `throughout`, so time will be a factor. Specifically, a node may start arbitrarily high (say 50 `coin` per MB), and decrease the price over some time period in an effort to entice other `nodes` to utilize it in a bridge.
+
+Ideally, a `node` with higher `throughput` will be rewarded more highly than one with lower `throughput`. Given that `throughput` is relative, since network conditions are dynamic, each `node` will maintain a measure of its `throughput` to each of its `peers` by sending heartbeat packets and measuring response.
+
+A client in the system that receives multiple `bridge responses`, each with their own price per MB, can choose whichever one meets the `Quality of Service` that it seeks. For low-latency applications, a client may choose to pay more, whereas for simple text based network content, a lower price may be more desirable.
+
+# 6. 
 
 
 
