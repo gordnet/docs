@@ -37,13 +37,42 @@ Each node will send a heartbeat packet (of 10MB) to measure `throughput` periodi
 
 When a `visitor node` wants to access the Bridgenet Network, it will first send a `bridge request` to each of its `peers`, these are the first layer connections. Each of them then sends a `bridge request` to each of their `peers` to build the second layer connections. Each of these sends a `bridge request` to each of their `peers` to get to the third and final layer connections. At this point, there's (potentially) 1,000 different paths, assuming that no 2 `nodes` are connected to the same `peers`. However, in practice, it's likely that there's significant overlap of `nodes`, which means the total number of unique paths will be less than the 1,000 theoretical maximum.
 
-Each `bridge request` is a packet of 10MB, so that the `relay node` can measure the uplink `throughput`. When a node receives a `bridge request`, it replies with it's `throughput` and a price in `coin` per 100MB of data. The packet size of the response is 10MB so that the requesting `node` can ascertain if the reported `throughput` is valid (within some tolerance). The price mechanism will be covered in the [Price Discovery](#4.-Price-Discovery) section. Each `node` that sends a `bridge request` and receives a response calculates, based on some heuristic, which offer is the best (`throughput` / `coin`) and passes that backwards to any `node` that sent it a `bridge request`. Consider the example below.
+Each `bridge request` is a packet of 10MB, so that the `relay node` can measure the uplink `throughput`. When a node receives a `bridge request`, it replies with it's `throughput` and a price in `coin` per 100MB of data. The packet size of the response is 10MB so that the requesting `node` can ascertain if the reported `throughput` is valid (within some tolerance). The price mechanism will be covered in the [Price Discovery](#5.-Price-Discovery) section. Each `node` that sends a `bridge request` and receives a response calculates, based on some heuristic, which offer is the best (`throughput` / `coin`) and passes that backwards to any `node` that sent it a `bridge request`. Along with the pricing and `throughput` information, each node passes back it's public key.
 
-%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22Satoshi%20(Originator)%22%20style%3D%22ellipse%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%2240%22%20y%3D%22160%22%20width%3D%22120%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%223%22%20value%3D%22Node%201%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22200%22%20y%3D%2280%22%20width%3D%22120%22%20height%3D%2240%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%224%22%20value%3D%22Node%202%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22200%22%20y%3D%22160%22%20width%3D%22120%22%20height%3D%2240%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%225%22%20value%3D%22Node%2010%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22200%22%20y%3D%22320%22%20width%3D%22120%22%20height%3D%2240%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%226%22%20value%3D%22%22%20style%3D%22endArrow%3Dclassic%3Bhtml%3D1%3Brounded%3D0%3BentryX%3D0%3BentryY%3D0.5%3BentryDx%3D0%3BentryDy%3D0%3B%22%20edge%3D%221%22%20source%3D%222%22%20target%3D%223%22%20parent%3D%221%22%3E%3CmxGeometry%20width%3D%2250%22%20height%3D%2250%22%20relative%3D%221%22%20as%3D%22geometry%22%3E%3CmxPoint%20x%3D%22410%22%20y%3D%22380%22%20as%3D%22sourcePoint%22%2F%3E%3CmxPoint%20x%3D%22460%22%20y%3D%22330%22%20as%3D%22targetPoint%22%2F%3E%3C%2FmxGeometry%3E%3C%2FmxCell%3E%3CmxCell%20id%3D%227%22%20value%3D%22%22%20style%3D%22shape%3Dimage%3Bhtml%3D1%3BverticalAlign%3Dtop%3BverticalLabelPosition%3Dbottom%3BlabelBackgroundColor%3D%23ffffff%3BimageAspect%3D0%3Baspect%3Dfixed%3Bimage%3Dhttps%3A%2F%2Fcdn2.iconfinder.com%2Fdata%2Ficons%2Fessential-web-5%2F50%2Fmore-dot-tripple-many-detail-128.png%3Bdirection%3Dsouth%3BfontSize%3D12%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22235%22%20y%3D%22230%22%20width%3D%2250%22%20height%3D%2250%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E
+# 4. Proof-of-Relay
+
+When the `originator` sends a packet to the first `node` in the `bridge`, it is first wrapped and encrypted 3 times. Along with sending the packet, the `originator` also broadcasts an `unlockKey` to the network via all of its peers. The `originator` sends a packet that has been encrypted with the public key of that node. When that packet is decrypted by the first `node`, it looks like:
+
+```json
+{
+  "data": "[ENCRYPTED DATA BUFFER]",
+  "unlockKey": "1234ABC"
+}
+```
+
+The first `node`, then forwards along the value from `data` (`[ENCRYPTED DATA BUFFER]` in this case) to the second `node` in the `bridge`. It also broadcasts the `unlockKey` to it's peers, which continue to propagate that `unlockKey` to their peers, and so on. The packet that is sent to the second `node`, when decrypted by the second `node` looks similar:
+
+```json
+{
+  "data": "[ANOTHER ENCRYPTED DATA BUFFER]",
+  "unlockKey": "5678ABC"
+}
+```
+
+The same actions apply and now the second `node` is revealing its `unlockKey` to its `peers`, and so on. The process goes on one more time with one difference. When the third `node` in the bridge decrypts the packet, it has:
+
+```json
+{
+  "data": "[ORIGINAL DATA REQUEST]",
+  "unlockKey": "90123ABC"
+}
+```
+
+It forwards the `[ORIGINAL DATA REQUEST]` to the `destination` and reveals its `unlockKey` to all of its peers. Now there are 4 `unlockKeys` that the network is aware of. Each node races to combine these 4 signatures to unlock the reward (discussed in Section TBD).
 
 
 
-# 4. Price Discovery
+# 5. Price Discovery
 
 
 
