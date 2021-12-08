@@ -32,6 +32,9 @@ Each `node` in the network is connected (by default) to 10 `peers`. To boostrap 
 
 Each node will send a heartbeat packet (of 10MB) to measure `throughput` periodically. Any peers that have a throughput slower than 1 standard deviation away from the average throughput will be dropped and new peers will be sought. Since a `peer` is a two-way connection, when the dropped `peer` attempts the heartbeat, it will find that it has been dropped and will find a new `peer`.
 
+![image](https://user-images.githubusercontent.com/1019677/145138988-38c7d8aa-2a4c-4d3e-b274-c79a4e8fe93f.png)
+
+
 
 # 3. Bridge Request
 
