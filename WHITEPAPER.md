@@ -82,9 +82,9 @@ Ideally, a `node` with higher `throughput` will be rewarded more highly than one
 
 A client in the system that receives multiple `bridge responses`, each with their own price per MB, can choose whichever one meets the `Quality of Service` that it seeks. For low-latency applications, a client may choose to pay more, whereas for simple text based network content, a lower price may be more desirable.
 
-# 6. Two Networks
+# 6. Two Networks and Two Transaction Types
 
-Gordnet is effectively 2 separate networks that meet in the middle. The first is the cryptocurrency, which is used to transact value in a trustless manner, similar to <cite>[Bitcoin][5]</cite>. The second is the <cite>[SOCKS][6]</cite> network which encapsulates and forwards packets at a TCP level.
+Gordnet is effectively 2 separate networks that meet in the middle. The first is the cryptocurrency, which is used to transact value in a trustless manner, similar to <cite>[Bitcoin][5]</cite>. The second is the <cite>[SOCKS][6]</cite> network which encapsulypesates and forwards packets at a TCP level. The cryptocurrency network will forward transactions utilizing the Unspent Transaction Output (UTXO) model with private / public key cryptography. Value will be stored in an `address`, and the amount that any `address` contains will be the sum of its UTXO's. 
 
 
 
