@@ -8,3 +8,6 @@
 
 ## Network Issues
 [Nano’s Network Flooded With Spam, Nodes Out of Sync](https://www.coindesk.com/tech/2021/03/11/nanos-network-flooded-with-spam-nodes-out-of-sync/)
+
+## Legal Implications of Exit Noes
+[Tor Exit Nodes: Legal and Policy Considerations](https://digitalcommons.law.uw.edu/cgi/viewcontent.cgi?article=1012&context=techclinic)
