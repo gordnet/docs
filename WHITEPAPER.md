@@ -1,9 +1,9 @@
-# Lily Whitepaper
+# Gordnet Whitepaper
 
 
 # 1. Introduction
 
-Lilynet is a decentralized trustless minimal-knowledge network that acts as a relay between two communicating parties via HTTP/HTTPS protocols. Specifically, when a user attempts to send a request to some website, the information can be intercepted and analyzed by various third parties (nefarious, Orwellian, etc.). Projects like <cite>[Tor][1]</cite> and <cite>[I2P][2]</cite> attempt to obfuscate the path between a user and his/her destination. In standard TCP/IP communication, both parties have information (specifically the IP address) of the other party. While Tor relay nodes remove this information, the problem is the lack of nodes due partially to the lack of incentive of being a relay. The figure below shows that there are currently 6,000 Tor relays and they are maintained in a <cite>[centralized list][3]</cite>, which makes it trivial for nefarious actors to block the services.
+Gordnet is a decentralized trustless minimal-knowledge network that acts as a relay between two communicating parties via HTTP/HTTPS protocols. Specifically, when a user attempts to send a request to some website, the information can be intercepted and analyzed by various third parties (nefarious, Orwellian, etc.). Projects like <cite>[Tor][1]</cite> and <cite>[I2P][2]</cite> attempt to obfuscate the path between a user and his/her destination. In standard TCP/IP communication, both parties have information (specifically the IP address) of the other party. While Tor relay nodes remove this information, the problem is the lack of nodes due partially to the lack of incentive of being a relay. The figure below shows that there are currently 6,000 Tor relays and they are maintained in a <cite>[centralized list][3]</cite>, which makes it trivial for nefarious actors to block the services.
 
 [<img src="https://user-images.githubusercontent.com/1019677/143939802-29eda65e-35a1-4d66-9c75-eea0a03fc409.png" width="50%"/>](https://user-images.githubusercontent.com/1019677/143939802-29eda65e-35a1-4d66-9c75-eea0a03fc409.png)
 
@@ -31,6 +31,9 @@ To keep consistency in this proposal, the following definitions will be referred
 Each `node` in the network is connected (by default) to 10 `peers`. To boostrap the list, similar to the <cite>[Bitcoin P2P bootstrapping mechanism][4]</cite>, Bridgenet will first try to connect to peers that it has connected to before, saved in its local database. If no cached peers can be connected to, it will query a DNS seed to get a list of active peers. If none of those are reachable, it will fallback to a hardcoded peer address. Once a peer is reached, it will be queried to find additional peers.
 
 Each node will send a heartbeat packet (of 10MB) to measure `throughput` periodically. Any peers that have a throughput slower than 1 standard deviation away from the average throughput will be dropped and new peers will be sought. Since a `peer` is a two-way connection, when the dropped `peer` attempts the heartbeat, it will find that it has been dropped and will find a new `peer`.
+
+![image](https://user-images.githubusercontent.com/1019677/145138988-38c7d8aa-2a4c-4d3e-b274-c79a4e8fe93f.png)
+
 
 
 # 3. Bridge Request
@@ -82,7 +85,9 @@ Ideally, a `node` with higher `throughput` will be rewarded more highly than one
 
 A client in the system that receives multiple `bridge responses`, each with their own price per MB, can choose whichever one meets the `Quality of Service` that it seeks. For low-latency applications, a client may choose to pay more, whereas for simple text based network content, a lower price may be more desirable.
 
-# 6. 
+# 6. Two Networks and Two Transaction Types
+
+Gordnet is effectively 2 separate networks that meet in the middle. The first is the cryptocurrency, which is used to transact value in a trustless manner, similar to <cite>[Bitcoin][5]</cite>. The second is the <cite>[SOCKS][6]</cite> network which encapsulypesates and forwards packets at a TCP level. The cryptocurrency network will forward transactions utilizing the Unspent Transaction Output (UTXO) model with private / public key cryptography. Value will be stored in an `address`, and the amount that any `address` contains will be the sum of its UTXO's. 
 
 
 
@@ -90,3 +95,5 @@ A client in the system that receives multiple `bridge responses`, each with thei
 [2]: https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.927.1044&rep=rep1&type=pdf
 [3]: https://community.torproject.org/relay/types-of-relays/
 [4]: https://bitcoin.stackexchange.com/a/32952/1151
+[5]: https://bitcoin.org/bitcoin.pdf
+[6]: https://datatracker.ietf.org/doc/html/rfc1928
