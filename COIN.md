@@ -1,10 +1,10 @@
 # Coin FAQ
 
-## What are the limitations of a blockchain-based coin?
+### What are the limitations of a blockchain-based coin?
 
-## Why do transactions need to be validated and how does it relate to consensus?
+### Why do transactions need to be validated and how does it relate to consensus?
 
-## Can the `Blockchain Trilemma` be solved?
+### Can the `Blockchain Trilemma` be solved?
 
 ```
 1. Scalability: the chain can process more transactions than a single regular node (think: a consumer laptop) can verify.
@@ -12,9 +12,10 @@
 3. Security: the chain can resist a large percentage of participating nodes trying to attack it (ideally 50%; anything above 25% is fine, 5% is definitely not fine).
 ```
 
-## Why use `Directed Acylic Graph` or `DAG`?
+### Why use `Directed Acylic Graph` or `DAG`?
 
-## What is a `Validation Set` or `ValSet`?
+### What is a `Validation Set` or `ValSet`?
 
-## How do we ensure that Validators compete to create different `Valsets`?
+### How do we ensure that Validators compete to create different `Valsets`?
 
+### How are conflicting `Valsets` resolved?
